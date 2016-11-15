@@ -143,9 +143,7 @@ io.on('connection', function(socket){
 	socket.on("getUserListOnRoom", function(id){
 		console.log("masukmas");
 		var u = list.findUser(id);
-		console.log(u.position);
 		var room = list.findRoom(u.position);
-		console.log(room);
 		var temp_users = [];
 		for(var i = 0; i < room.usersId.length; i++){
 			var temp_user  = {};
@@ -157,6 +155,7 @@ io.on('connection', function(socket){
 			
 			temp_users.push(temp_user);
 		}
+		console.log(temp_users);
 		socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 	});
 });
