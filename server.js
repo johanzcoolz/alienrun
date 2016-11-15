@@ -31,7 +31,7 @@ var character = require('./model/character.js');
 // io.attach(PORT);
 // const io = socketIO(server);
 io.on('connection', function(socket){
-	console.log('Client connected');
+	console.log('Client connected a');
 	// User connected first time
 	var name = "Sleey";				// Get username
 	
