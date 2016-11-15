@@ -9,6 +9,13 @@
 
 // const colors = require("colors");
 
+var bcrypt = require('bcrypt-nodejs');
+var mongoose = require('mongoose');
+
+var db = 'mongodb://root:root@ds139937.mlab.com:39937/aliendb';
+
+mongoose.connect(db);
+
 var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
@@ -32,6 +39,7 @@ var character = require('./model/character.js');
 // const io = socketIO(server);
 io.on('connection', function(socket){
 	console.log('Client connected');
+	console.log("Mongodb Status : " + mongoose.connection.readyState);
 	// User connected first time
 	var name = "Sleey";				// Get username
 	
@@ -79,6 +87,7 @@ io.on('connection', function(socket){
 			var u = list.findUser(room.usersId[i])
 			temp_user.name = u.name;
 			temp_user.id = u.id;
+			temp_user.ready = u.status;
 			temp_user.alien = list.findCharacter(u.id).alien;
 			
 			temp_users.push(temp_user);
@@ -86,7 +95,7 @@ io.on('connection', function(socket){
 		socket.emit('userListOnRoom', {data: temp_users});
 		for(var i = 0; i < room.usersId.length; i++){
 			var user = list.findUser(room.usersId[i]);
-			user.socket.emit('userListOnRoom', {data: temp_users});
+			user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 		}
 
 	});
@@ -143,11 +152,12 @@ io.on('connection', function(socket){
 			var u = list.findUser(room.usersId[i])
 			temp_user.name = u.name;
 			temp_user.id = u.id;
+			temp_user.ready = u.status;
 			temp_user.alien = list.findCharacter(u.id).alien;
 			
 			temp_users.push(temp_user);
 		}
-		socket.emit('userListOnRoom', {data: temp_users});
+		socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 	});
 });
 
