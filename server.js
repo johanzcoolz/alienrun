@@ -31,7 +31,7 @@ var character = require('./model/character.js');
 // io.attach(PORT);
 // const io = socketIO(server);
 io.on('connection', function(socket){
-	console.log('Client connected a');
+	console.log('Client connected');
 	// User connected first time
 	var name = "Sleey";				// Get username
 	
@@ -147,7 +147,7 @@ io.on('connection', function(socket){
 			
 			temp_users.push(temp_user);
 		}
-		socket.emit('userListOnRoom', {data: temp_users, vroom : room});
+		socket.emit('userListOnRoom', {data: temp_users});
 	});
 });
 
