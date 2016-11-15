@@ -73,7 +73,7 @@ io.on('connection', function(socket){
 	socket.on('ready', function(data){
 		list.findUser(data).ready();		// toggle ready
 	});
-
+	
 	socket.on('cancel', function(id){
 		var roomId = list.findUser(id).position;
 		var room = list.findRoom(roomId);

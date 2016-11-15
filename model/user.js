@@ -25,7 +25,10 @@ function User(name, socket) {
 }
 
 User.prototype.ready = function() {
-  this.status = true;
+  if(this.status)
+    this.status = false;
+  else
+    this.status = true;
 };
 
 User.prototype.cancel = function() {
