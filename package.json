@@ -10,9 +10,11 @@
   "author": "Johanes Cristanto",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "colors": "^1.1.2",
     "express": "^4.10.2",
-    "socket.io": "^1.5.1",
-    "forever": "^0.15.2"
+    "forever": "^0.15.2",
+    "mongoose": "^4.6.8",
+    "socket.io": "^1.5.1"
   }
 }
