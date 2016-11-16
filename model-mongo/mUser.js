@@ -4,4 +4,4 @@ var UserSchema = new Schema({
   username: String,
 });
 
-module.exports = mongoose.model('mUser', UserSchema);
+module.exports = mongoose.model('users', UserSchema);
