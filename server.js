@@ -9,13 +9,6 @@
 
 // const colors = require("colors");
 
-var bcrypt = require('bcrypt-nodejs');
-var mongoose = require('mongoose');
-
-var db = 'mongodb://root:root@ds139937.mlab.com:39937/aliendb';
-
-mongoose.connect(db);
-
 var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
@@ -39,7 +32,6 @@ var character = require('./model/character.js');
 // const io = socketIO(server);
 io.on('connection', function(socket){
 	console.log('Client connected');
-	console.log("Mongodb Status : " + mongoose.connection.readyState);
 	// User connected first time
 	var name = "Sleey";				// Get username
 	

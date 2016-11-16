@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var db = 'mongodb://root:root@ds139937.mlab.com:39937/aliendb';
 
 mongoose.connect(db);
+console.log("Mongodb Status : " + mongoose.connection.readyState);
 
 module.exports = {
 	roomList: function(){
@@ -24,7 +25,6 @@ module.exports = {
 			}
 			console.log(res);
 		});
-
 		mongoose.disconnect();
 	},
 
