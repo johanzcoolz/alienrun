@@ -17,6 +17,22 @@ var express = require('express'),
 var PORT = process.env.PORT || 3000;
 server.listen(PORT);
 
+const mongoose = require('mongoose');
+var db = 'mongodb://root:root@ds139937.mlab.com:39937/aliendb';
+mongoose.Promise = global.Promise
+mongoose.connection.on('open', function (ref) {
+  console.log('Connected to mongo server.');
+  console.log("Mongodb Status : " + mongoose.connection.readyState);
+});
+mongoose.connection.on('error', function (err) {
+  console.log('Could not connect to mongo server!');
+  console.log(err);
+});
+
+
+mongoose.connect(db);
+console.log("Mongodb Status : " + mongoose.connection.readyState);
+
 
 // var io = require('socket.io')({
 // 	transports: ['websocket'],

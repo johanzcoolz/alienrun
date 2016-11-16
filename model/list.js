@@ -1,11 +1,4 @@
-const mongoose = require('mongoose');
-
-var db = 'mongodb://root:root@ds139937.mlab.com:39937/aliendb';
 var moUser = require('../model-mongo/mUser.js');
-
-mongoose.Promise = global.Promise
-mongoose.connect(db);
-console.log("Mongodb Status : " + mongoose.connection.readyState);
 
 module.exports = {
 	roomList: function(){
@@ -27,7 +20,6 @@ module.exports = {
 			console.log(res);
 			console.log("ADDED YO");
 		});
-		mongoose.disconnect();
 	},
 
 	createRoom: function(room){
