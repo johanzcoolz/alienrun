@@ -25,6 +25,7 @@ module.exports = {
 				console.log(err.red);
 			}
 			console.log(res);
+			console.log("ADDED YO");
 		});
 		mongoose.disconnect();
 	},
