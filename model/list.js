@@ -1,3 +1,8 @@
+var mongoose = require('mongoose');
+var db = 'mongodb://root:root@ds139937.mlab.com:39937/aliendb';
+
+mongoose.connect(db);
+
 module.exports = {
 	roomList: function(){
 		return rooms;
@@ -9,6 +14,18 @@ module.exports = {
 
 	addUser: function(user){
 		users.push(user);
+		var temp = {
+			username: user.name
+		}
+
+		temp.save((err, res) => {
+			if(err) {
+				console.log(err.red);
+			}
+			console.log(res);
+		});
+
+		mongoose.disconnect();
 	},
 
 	createRoom: function(room){

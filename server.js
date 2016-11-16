@@ -49,13 +49,13 @@ io.on('connection', function(socket){
 			var current = new user(data.name, socket);
 			list.addUser(current);
 			socket.emit("giveId", { data: current.id });
-			console.log(list.userList());
+			// console.log(list.userList());
 		}
 	});
-	socket.on('beep', function(){
-		console.log("beep here");
-		socket.emit('boop', {name: "Frans", data:1222});
-	});
+	// socket.on('beep', function(){
+	// 	console.log("beep here");
+	// 	socket.emit('boop', {name: "Frans", data:1222});
+	// });
 
 	socket.on('createRoom', function(data){
 		console.log("masuk " + data.id);
@@ -64,7 +64,7 @@ io.on('connection', function(socket){
 		list.createRoom(createdRoom);							// create room
 		list.findUser(data.id).ready();						// toggle ready for room master
 		list.findUser(data.id).position = createdRoom.id;	// set position
-		console.log(list.roomList());
+		// console.log(list.roomList());
 		var c = new character(data.id, null, 0, 0);
 		list.addCharacter(c);
 		socket.emit("joined");
@@ -141,7 +141,7 @@ io.on('connection', function(socket){
 	});
 
 	socket.on("getUserListOnRoom", function(id){
-		console.log("masukmas");
+		// console.log("masukmas");
 		var u = list.findUser(id);
 		var room = list.findRoom(u.position);
 		var temp_users = [];
