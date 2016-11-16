@@ -17,7 +17,6 @@ var express = require('express'),
 var PORT = process.env.PORT || 3000;
 server.listen(PORT);
 
-const mongoose = require('mongoose');
 var db = 'mongodb://root:root@ds139937.mlab.com:39937/aliendb';
 mongoose.Promise = global.Promise
 mongoose.connection.on('open', function (ref) {
