@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var db = 'mongodb://root:root@ds139937.mlab.com:39937/aliendb';
+var moUser = require('./model-mongo/mUser.js');
 
 mongoose.connect(db);
 console.log("Mongodb Status : " + mongoose.connection.readyState);
@@ -15,9 +16,7 @@ module.exports = {
 
 	addUser: function(user){
 		users.push(user);
-		var temp = {
-			username: user.name
-		}
+		var temp = new moUser({username: user.name});
 
 		temp.save((err, res) => {
 			if(err) {
