@@ -33,9 +33,9 @@ mongoose.connect(db);
 console.log("Mongodb Status : " + mongoose.connection.readyState);
 
 
-var io = require('socket.io')({
-	transports: ['websocket'],
-});
+// var io = require('socket.io')({
+// 	transports: ['websocket'],
+// });
 
 var user = require('./model/user.js');
 var list = require('./model/list.js');
