@@ -17,20 +17,20 @@ var express = require('express'),
 var PORT = process.env.PORT || 3000;
 server.listen(PORT);
 
-var db = 'mongodb://root:root@ds139937.mlab.com:39937/aliendb';
-mongoose.Promise = global.Promise
-mongoose.connection.on('open', function (ref) {
-  console.log('Connected to mongo server.');
-  console.log("Mongodb Status : " + mongoose.connection.readyState);
-});
-mongoose.connection.on('error', function (err) {
-  console.log('Could not connect to mongo server!');
-  console.log(err);
-});
+// var db = 'mongodb://root:root@ds139937.mlab.com:39937/aliendb';
+// mongoose.Promise = global.Promise
+// mongoose.connection.on('open', function (ref) {
+//   console.log('Connected to mongo server.');
+//   console.log("Mongodb Status : " + mongoose.connection.readyState);
+// });
+// mongoose.connection.on('error', function (err) {
+//   console.log('Could not connect to mongo server!');
+//   console.log(err);
+// });
 
 
-mongoose.connect(db);
-console.log("Mongodb Status : " + mongoose.connection.readyState);
+// mongoose.connect(db);
+// console.log("Mongodb Status : " + mongoose.connection.readyState);
 
 
 // var io = require('socket.io')({
@@ -147,35 +147,3 @@ io.on('connection', function(socket){
 		socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 	});
 });
-
-
-
-// var name = "Sleey";			// Get username
-// var current = new user(name);
-// var current2 = new user("test");
-// list.addUser(current);
-// list.addUser(current2);
-
-
-// var createdRoom = new room(current.id,"a");
-
-// list.createRoom(createdRoom);							// create room
-// list.findUser(current.id).ready();						// toggle ready for room master
-// list.findUser(current.id).position = createdRoom.id;	// set position
-
-
-// list.findUser(current2.id).join(0);
-// list.findRoom(0).usersId.push(current2.id);
-
-
-// console.log(list.roomList());
-// console.log(list.userList());
-
-// console.log("\nAfter Master Room Quit");
-
-// list.quitRoom(current.id, list.findUser(current.id).position);
-// list.findUser(current.id).cancel();
-// list.findUser(current.id).leave();
-
-// console.log(list.roomList());
-// console.log(list.userList());
