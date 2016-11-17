@@ -90,7 +90,7 @@ io.on('connection', function(socket){
 		list.quitRoom(id, roomId);		// quit room
 		list.findUser(id).cancel();		// set ready to false
 		list.findUser(id).leave();		// set position to null
-		var temp_users = list.getUserListOnRoom(room);
+		var temp_users = list.userListOnRoom(room);
 		socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 		for(var i = 0; i < room.usersId.length; i++){
 			var user = list.findUser(room.usersId[i]);
