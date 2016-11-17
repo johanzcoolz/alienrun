@@ -12,8 +12,8 @@ var mongoose = require('mongoose');
 var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
-    io = require('socket.io')(server, {'transports': ['websocket', 'polling']}).listen(server);
-
+    io = require('socket.io').listen(server);
+io.set('transports', ['websocket']);
 var PORT = process.env.PORT || 3000;
 server.listen(PORT);
 console.log(PORT);
