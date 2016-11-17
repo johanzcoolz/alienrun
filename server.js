@@ -49,7 +49,6 @@ io.on('connection', function(socket){
 	console.log('Client connected');
 	// User connected first time
 	var name = "Sleey";				// Get username
-	
 	socket.on('connect',function(data){
 		// console.log('test '+data.id);
 		if(data.id == ""){
@@ -78,7 +77,11 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('ready', function(data){
-		list.findUser(data).ready();		// toggle ready
+		var user = list.findUser(data);		// toggle ready
+		user.ready();
+		var room = list.findRoom(user.roomId);
+		var temp_users = list.userListOnRoom(room);
+		user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 	});
 	
 	socket.on('cancel', function(id){
@@ -87,19 +90,8 @@ io.on('connection', function(socket){
 		list.quitRoom(id, roomId);		// quit room
 		list.findUser(id).cancel();		// set ready to false
 		list.findUser(id).leave();		// set position to null
-		
-		var temp_users = [];
-		for(var i = 0; i < room.usersId.length; i++){
-			var temp_user  = {};
-			var u = list.findUser(room.usersId[i])
-			temp_user.name = u.name;
-			temp_user.id = u.id;
-			temp_user.ready = u.status;
-			temp_user.alien = list.findCharacter(u.id).alien;
-			
-			temp_users.push(temp_user);
-		}
-		socket.emit('userListOnRoom', {data: temp_users});
+		var temp_users = list.getUserListOnRoom(room);
+		socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 		for(var i = 0; i < room.usersId.length; i++){
 			var user = list.findUser(room.usersId[i]);
 			user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
@@ -151,18 +143,7 @@ io.on('connection', function(socket){
 		// console.log("masukmas");
 		var u = list.findUser(id);
 		var room = list.findRoom(u.position);
-		var temp_users = [];
-		for(var i = 0; i < room.usersId.length; i++){
-			var temp_user  = {};
-			var u = list.findUser(room.usersId[i])
-			temp_user.name = u.name;
-			temp_user.id = u.id;
-			temp_user.ready = u.status;
-			temp_user.alien = list.findCharacter(u.id).alien;
-			
-			temp_users.push(temp_user);
-		}
-		console.log(temp_users);
+		var temp_users = list.userListOnRoom(room);
 		socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 	});
 });

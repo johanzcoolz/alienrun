@@ -8,6 +8,21 @@ module.exports = {
 	userList: function(){
 		return users;
 	},
+	userListOnRoom: function(room){
+		var temp_users = [];
+		for(var i = 0; i < room.usersId.length; i++){
+			var temp_user  = {};
+			var u = list.findUser(room.usersId[i])
+			temp_user.name = u.name;
+			temp_user.id = u.id;
+			temp_user.ready = u.status;
+			temp_user.alien = list.findCharacter(u.id).alien;
+			
+			temp_users.push(temp_user);
+		}
+		console.log(temp_users);
+		return temp_users;
+	},
 
 	addUser: function(user){
 		users.push(user);
