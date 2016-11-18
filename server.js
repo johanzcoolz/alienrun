@@ -52,10 +52,11 @@ io.on('connection', function(socket){
 	socket.on('connect',function(data){
 		// console.log('test '+data.id);
 		if(data.id == ""){
+
 			var current = new user(data.name, socket);
-			list.addUser(current);
-			socket.emit("giveId", { data: current.id });
-			// console.log(list.userList());
+			var id = list.addUser(current);
+			socket.emit("giveId", { data: id });
+			console.log(list.userList());
 		}
 	});
 	// socket.on('beep', function(){
