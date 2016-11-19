@@ -100,8 +100,8 @@ module.exports = {
 
 var users = [];
 moUser.find((err, u) => {
-	u.forEach(function(user) {
-      var temp = new User(user.name, null, user._id);
+	u.forEach(function(t_user) {
+      var temp = new user(t_user.name, null, t_user._id);
       users.add(temp);
     });
     console.log(users);
