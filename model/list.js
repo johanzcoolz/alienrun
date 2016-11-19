@@ -99,5 +99,6 @@ module.exports = {
 };
 
 var users = [];
+console.log(moUser.find());
 var rooms = [];
 var characters = [];
