@@ -24,9 +24,10 @@ module.exports = {
 	},
 
 	addUser: function(user){
-		users.push(user);
+		
 		var temp = new moUser({username: user.name});
-
+		user.id = temp._id;
+		users.push(user);
 		temp.save((err, res) => {
 			if(err) {
 				console.log(err.red);
