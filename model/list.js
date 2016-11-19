@@ -99,8 +99,8 @@ module.exports = {
 };
 
 var users = [];
-moUser.find((rs) => {
-	console.log(rs);
+moUser.find((err, u) => {
+	console.log(u);
 });
 var rooms = [];
 var characters = [];

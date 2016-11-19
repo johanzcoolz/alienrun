@@ -1,4 +1,3 @@
-var userCount = 0;
 
 // function (){
   
@@ -15,13 +14,12 @@ module.exports = User;
  * position = "room name"
  *
  */
-function User(name, socket) {
-    this.id = userCount;
+function User(name, socket, id) {
+    this.id = id;
     this.name = name;
     this.status = false;
     this.position = null;
     this.socket = socket;
-    userCount++;
 }
 
 User.prototype.ready = function() {
