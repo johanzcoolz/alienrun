@@ -91,6 +91,11 @@ module.exports = {
 					if(rooms[i].usersId.length==0) {
 						rooms.splice(i,1);
 					}
+					else{
+						rooms[i].masterId = rooms[i].usersId[0];
+						this.findUser(rooms[i].usersId[0]).status = true;
+						
+					}
 				}
 				return;
 			}

@@ -121,9 +121,7 @@ io.on('connection', function(socket){
 		var temp_users = list.userListOnRoom(room);
 		for(var i = 0; i < room.usersId.length; i++){
 			var user = list.findUser(room.usersId[i]);
-
 			user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
-			user.socket.emit('test', {name: "Frans", data:1222});
 		}
 	});
 
