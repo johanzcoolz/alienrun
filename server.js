@@ -47,8 +47,10 @@ var character = require('./model/character.js');
 // const io = socketIO(server);
 io.on('connection', function(socket){
 	// User connected first time
+
 	var name = "Sleey";				// Get username
 	socket.on('connect',function(data){
+		var hs = socket.handshake;
 		if(data.sid == ""){
 			var current = new User(data.name, socket);
 			var id = list.addUser(current);
@@ -60,6 +62,7 @@ io.on('connection', function(socket){
 			user.socket = socket;
 			socket.emit("giveId", { data: user.id });
 		}
+		console.log(list.userList());
 	});
 	// socket.on('beep', function(){
 	// 	console.log("beep here");
@@ -67,11 +70,9 @@ io.on('connection', function(socket){
 	// });
 
 	socket.on('createRoom', function(data){
-		console.log("masuk " + data.id);
 		var createdRoom = new room(data.id , data.name, data.password, data.usersId);
-
+		list.findUser(data.id).socket = socket;
 		list.createRoom(createdRoom);							// create room
-		console.log(createdRoom);
 		list.findUser(data.id).ready();						// toggle ready for room master
 		list.findUser(data.id).position = createdRoom.id;	// set position
 		// console.log(list.roomList());
@@ -83,13 +84,18 @@ io.on('connection', function(socket){
 	socket.on('ready', function(data){
 		var user = list.findUser(data.id);		// toggle ready
 		user.ready();
-		var room = list.findRoom(user.roomId);
+		var room = list.findRoom(user.position);
 		var temp_users = list.userListOnRoom(room);
-		user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
+		console.log(temp_users);
+		for(var i = 0; i < room.usersId.length; i++){
+			var user = list.findUser(room.usersId[i]);
+			user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
+		}
 	});
 	
 	socket.on('cancel', function(data){
 		var id = data.id;
+		list.findUser(id).socket = socket;
 		var roomId = list.findUser(id).position;
 		var room = list.findRoom(roomId);
 		list.quitRoom(id, roomId);		// quit room
@@ -110,6 +116,15 @@ io.on('connection', function(socket){
 		var c = new character(data.id, null, 0, 0);
 		list.addCharacter(c);
 		socket.emit("joined");
+		list.findUser(data.id).socket = socket;
+		var room = list.findRoom(data.roomId);
+		var temp_users = list.userListOnRoom(room);
+		for(var i = 0; i < room.usersId.length; i++){
+			var user = list.findUser(room.usersId[i]);
+
+			user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
+			user.socket.emit('test', {name: "Frans", data:1222});
+		}
 	});
 
 	socket.on('start', function(roomId){
@@ -146,9 +161,9 @@ io.on('connection', function(socket){
 
 	socket.on("getUserListOnRoom", function(data){
 		var u = list.findUser(data.id);
+		u.socket = socket;
 		var room = list.findRoom(u.position);
 		var temp_users = list.userListOnRoom(room);
-		console.log(room);
 		socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 	});
 });
