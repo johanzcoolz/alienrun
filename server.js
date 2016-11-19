@@ -58,6 +58,12 @@ io.on('connection', function(socket){
 			socket.emit("giveId", { data: id });
 			console.log(list.userList());
 		}
+		else{
+			var user = list.findUser(data.id);
+			user.name = data.name;
+			user.socket = socket;
+			
+		}
 	});
 	// socket.on('beep', function(){
 	// 	console.log("beep here");
