@@ -100,7 +100,11 @@ module.exports = {
 
 var users = [];
 moUser.find((err, u) => {
-	console.log(u);
+	u.forEach(function(user) {
+      var temp = new User(user.name, null, user._id);
+      users.add(temp);
+    });
+    console.log(users);
 });
 var rooms = [];
 var characters = [];
