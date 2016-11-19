@@ -24,7 +24,6 @@ module.exports = {
 	},
 
 	addUser: function(user){
-		
 		var temp = new moUser({username: user.name});
 		user.id = temp._id;
 		users.push(user);
@@ -33,8 +32,8 @@ module.exports = {
 				console.log(err.red);
 			}
 			console.log(res);
-			console.log("ADDED YO");
 		});
+		return user.id;
 	},
 
 	createRoom: function(room){
