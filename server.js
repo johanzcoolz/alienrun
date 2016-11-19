@@ -37,7 +37,7 @@ console.log("Mongodb Status : " + mongoose.connection.readyState);
 // 	transports: ['websocket'],
 // });
 
-var user = require('./model/user.js');
+var User = require('./model/user.js');
 var list = require('./model/list.js');
 var room = require('./model/room.js');
 var character = require('./model/character.js');
@@ -46,23 +46,19 @@ var character = require('./model/character.js');
 // io.attach(PORT);
 // const io = socketIO(server);
 io.on('connection', function(socket){
-	console.log('Client connected');
 	// User connected first time
 	var name = "Sleey";				// Get username
 	socket.on('connect',function(data){
-		// console.log('test '+data.id);
-		if(data.id == ""){
-
-			var current = new user(data.name, socket);
+		if(data.sid == ""){
+			var current = new User(data.name, socket);
 			var id = list.addUser(current);
 			socket.emit("giveId", { data: id });
-			console.log(list.userList());
 		}
 		else{
-			var user = list.findUser(data.id);
+			var user = list.findUser(data.sid);
 			user.name = data.name;
 			user.socket = socket;
-			
+			socket.emit("giveId", { data: user.id });
 		}
 	});
 	// socket.on('beep', function(){
@@ -75,6 +71,7 @@ io.on('connection', function(socket){
 		var createdRoom = new room(data.id , data.name, data.password, data.usersId);
 
 		list.createRoom(createdRoom);							// create room
+		console.log(createdRoom);
 		list.findUser(data.id).ready();						// toggle ready for room master
 		list.findUser(data.id).position = createdRoom.id;	// set position
 		// console.log(list.roomList());
@@ -84,14 +81,15 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('ready', function(data){
-		var user = list.findUser(data);		// toggle ready
+		var user = list.findUser(data.id);		// toggle ready
 		user.ready();
 		var room = list.findRoom(user.roomId);
 		var temp_users = list.userListOnRoom(room);
 		user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 	});
 	
-	socket.on('cancel', function(id){
+	socket.on('cancel', function(data){
+		var id = data.id;
 		var roomId = list.findUser(id).position;
 		var room = list.findRoom(roomId);
 		list.quitRoom(id, roomId);		// quit room
@@ -146,11 +144,11 @@ io.on('connection', function(socket){
 		socket.emit('userList', {data: list.userList()});
 	});
 
-	socket.on("getUserListOnRoom", function(id){
-		// console.log("masukmas");
-		var u = list.findUser(id);
+	socket.on("getUserListOnRoom", function(data){
+		var u = list.findUser(data.id);
 		var room = list.findRoom(u.position);
 		var temp_users = list.userListOnRoom(room);
+		console.log(room);
 		socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 	});
 });

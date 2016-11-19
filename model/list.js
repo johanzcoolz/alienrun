@@ -12,7 +12,7 @@ module.exports = {
 		var temp_users = [];
 		for(var i = 0; i < room.usersId.length; i++){
 			var temp_user  = {};
-			var u = this.findUser(room.usersId[i])
+			var u = this.findUser(room.usersId[i]);
 			temp_user.name = u.name;
 			temp_user.id = u.id;
 			temp_user.ready = u.status;
@@ -100,12 +100,10 @@ module.exports = {
 
 var users = [];
 moUser.find((err, u) => {
-	console.log(u);
 	u.forEach(function(t_user) {
-      var temp = new User(t_user.name, null, t_user._id);
-      users.add(temp);
+      var temp = new User(t_user.username, null, t_user._id);
+      users.push(temp);
     });
-    console.log(users);
 });
 var rooms = [];
 var characters = [];
