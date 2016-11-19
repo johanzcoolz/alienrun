@@ -102,7 +102,7 @@ var users = [];
 moUser.find((err, u) => {
 	console.log(u);
 	u.forEach(function(t_user) {
-      var temp = new user(t_user.name, null, t_user._id);
+      var temp = new this.user(t_user.name, null, t_user._id);
       users.add(temp);
     });
     console.log(users);
