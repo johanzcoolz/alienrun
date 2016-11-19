@@ -1,5 +1,5 @@
 var moUser = require('../model-mongo/mUser.js');
-
+const User = require('../model/user.js');
 module.exports = {
 	roomList: function(){
 		return rooms;
@@ -102,7 +102,7 @@ var users = [];
 moUser.find((err, u) => {
 	console.log(u);
 	u.forEach(function(t_user) {
-      var temp = new this.user(t_user.name, null, t_user._id);
+      var temp = new User(t_user.name, null, t_user._id);
       users.add(temp);
     });
     console.log(users);
