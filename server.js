@@ -213,12 +213,13 @@ io.on('connection', function(socket){
 		}
 	});
 	socket.on("RequestGetCharacter", function(data){
+		console.log("req char");
 		var user = list.findUser(data.id);
 		var room = list.findRoom(user.position);
 		var temp_users = list.userListOnRoomExceptMaster(room, data.id);
 		if(user.id == room.masterId){
 			var user = list.findUser(room.usersId[i]);
-			socket.emit("GetInitAllCharacter", {data : temp_users});
+			user.socket.emit("GetInitAllCharacter", {data : temp_users});
 		}
 	});
 });
