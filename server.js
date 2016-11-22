@@ -200,6 +200,7 @@ io.on('connection', function(socket){
 		}
 	});
 	socket.on("RequestGenerate", function(data){
+		console.log("masuk request");
 		var user = list.findUser(data.id);
 		var room = list.findRoom(user.position);
 		if(user.id = room.masterId){
