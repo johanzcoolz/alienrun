@@ -131,13 +131,14 @@ io.on('connection', function(socket){
 		console.log(data);
 		var user = list.findUser(data.id);		// toggle ready
 		user.ready();
+		user.socket = socket;
 		var room = list.findRoom(user.position);
 		//room.start();			// set status to true
 		var temp_users = list.userListOnRoom(room);
 		console.log(temp_users);
 		for(var i = 0; i < room.usersId.length; i++){
 			var user = list.findUser(room.usersId[i]);
-			user.socket.emit('ToSelectCharacter', {data: temp_users, vroom : room});
+			user.socket.emit('ToSelectCharacter', null);
 		}
 	});
 
