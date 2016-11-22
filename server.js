@@ -82,6 +82,7 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('ready', function(data){
+		console.log("ready func");
 		var user = list.findUser(data.id);		// toggle ready
 		user.ready();
 		var room = list.findRoom(user.position);
@@ -125,8 +126,19 @@ io.on('connection', function(socket){
 		}
 	});
 
-	socket.on('start', function(roomId){
-		list.findRoom(roomId).start();			// set status to true
+	socket.on('start', function(data){
+		console.log("start func");
+		console.log(data);
+		var user = list.findUser(data.id);		// toggle ready
+		user.ready();
+		var room = list.findRoom(user.position);
+		//room.start();			// set status to true
+		var temp_users = list.userListOnRoom(room);
+		console.log(temp_users);
+		for(var i = 0; i < room.usersId.length; i++){
+			var user = list.findUser(room.usersId[i]);
+			user.socket.emit('ToSelectCharacter', {data: temp_users, vroom : room});
+		}
 	});
 
 	socket.on('finish', function(roomId){
@@ -163,5 +175,24 @@ io.on('connection', function(socket){
 		var room = list.findRoom(u.position);
 		var temp_users = list.userListOnRoom(room);
 		socket.emit('userListOnRoom', {data: temp_users, vroom : room});
+	});
+
+	socket.on('getSelectedChar', function(data){
+		console.log("selectchar func");
+		console.log(data);
+
+		list.findUser(data.id).socket = socket;
+		var char = list.findCharacter(data.id);
+		char.alien = data.alien;
+
+		var user = list.findUser(data.id);
+		var room = list.findRoom(user.position);
+		//room.start();			// set status to true
+		var temp_users = list.userListOnRoom(room);
+		console.log(room.usersId.length);
+		for(var i = 0; i < room.usersId.length; i++){
+			var user = list.findUser(room.usersId[i]);
+			user.socket.emit('selectedChar', {data: temp_users, character: char});
+		}
 	});
 });
