@@ -195,7 +195,7 @@ io.on('connection', function(socket){
 		console.log("masuk generated");
 		var user = list.findUser(data.id);
 		var room = list.findRoom(user.position);
-		var users = list.findUser();
+		var users = list.userList();
 		for(var i = 0; i < users.length; i++){
 			console.log(users.id);
 		}
