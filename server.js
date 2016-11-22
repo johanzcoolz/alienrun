@@ -136,6 +136,9 @@ io.on('connection', function(socket){
 		console.log(temp_users);
 		for(var i = 0; i < room.usersId.length; i++){
 			var user = list.findUser(room.usersId[i]);
+			if(user.id != room.masterId){
+				user.status = false;
+			}
 			user.socket.emit('ToSelectCharacter', {data: temp_users});
 		}
 	});
