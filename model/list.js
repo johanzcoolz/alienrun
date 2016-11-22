@@ -25,7 +25,7 @@ module.exports = {
 	userListOnRoomExceptMaster: function(room, id){
 		var temp_users = [];
 		for(var i = 0; i < room.usersId.length; i++){
-			if(room.masterId != id){
+			if(room.usersId[i] != id){
 				var temp_user  = {};
 				var u = this.findUser(room.usersId[i]);
 				temp_user.name = u.name;

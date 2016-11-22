@@ -217,9 +217,6 @@ io.on('connection', function(socket){
 		var user = list.findUser(data.id);
 		var room = list.findRoom(user.position);
 		var temp_users = list.userListOnRoomExceptMaster(room, data.id);
-		if(user.id == room.masterId){
-			var user = list.findUser(room.usersId[i]);
-			user.socket.emit("GetInitAllCharacter", {data : temp_users});
-		}
+		socket.emit("GetInitAllCharacter", {data : temp_users});
 	});
 });
