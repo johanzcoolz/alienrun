@@ -198,7 +198,7 @@ io.on('connection', function(socket){
 			user.socket.emit('GetGeneratedTiles', {datas : data.tiles});
 		}
 	});
-	socket.on("RequestGenerate", function(data)){
+	socket.on("RequestGenerate", function(data){
 		var user = list.findUser(data.id);
 		var room = list.findRoom(user.position);
 		if(user.id = room.masterId){
