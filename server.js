@@ -59,7 +59,6 @@ io.on('connection', function(socket){
 		else{
 			var user = list.findUser(data.sid);
 			user.name = data.name;
-			user.socket = socket;
 			socket.emit("giveId", { data: user.id });
 		}
 		console.log(list.userList());
@@ -130,15 +129,14 @@ io.on('connection', function(socket){
 		console.log("start func");
 		console.log(data);
 		var user = list.findUser(data.id);		// toggle ready
-		user.ready();
-		user.socket = socket;
+		// user.ready();
 		var room = list.findRoom(user.position);
-		//room.start();			// set status to true
+		room.start();			// set status to true
 		var temp_users = list.userListOnRoom(room);
 		console.log(temp_users);
 		for(var i = 0; i < room.usersId.length; i++){
 			var user = list.findUser(room.usersId[i]);
-			user.socket.emit('ToSelectCharacter', null);
+			user.socket.emit('ToSelectCharacter', {data: temp_users});
 		}
 	});
 
@@ -172,7 +170,6 @@ io.on('connection', function(socket){
 
 	socket.on("getUserListOnRoom", function(data){
 		var u = list.findUser(data.id);
-		u.socket = socket;
 		var room = list.findRoom(u.position);
 		var temp_users = list.userListOnRoom(room);
 		socket.emit('userListOnRoom', {data: temp_users, vroom : room});
