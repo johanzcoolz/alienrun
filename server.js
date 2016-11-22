@@ -59,6 +59,7 @@ io.on('connection', function(socket){
 		else{
 			var user = list.findUser(data.sid);
 			user.name = data.name;
+			user.socket = socket;
 			socket.emit("giveId", { data: user.id });
 		}
 		console.log(list.userList());
