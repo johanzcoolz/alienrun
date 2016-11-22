@@ -195,11 +195,10 @@ io.on('connection', function(socket){
 		console.log("masuk generated");
 		var user = list.findUser(data.id);
 		var room = list.findRoom(user.position);
-		console.log(list.userList());
 		for(var i = 0; i < room.usersId.length; i++){
-			console.log(room.usersId[i]);
-			var user = list.findUser(room.usersId[i]);
-			user.socket.emit('GetGeneratedTiles', {datas : data.tiles});
+			var vuser = list.findUser(room.usersId[i]);
+			console.log(vuser);
+			vuser.socket.emit('GetGeneratedTiles', {datas : data.tiles});
 		}
 	});
 	socket.on("RequestGenerate", function(data){
