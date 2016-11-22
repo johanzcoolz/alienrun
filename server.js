@@ -209,7 +209,7 @@ io.on('connection', function(socket){
 	socket.on("RequestGenerate", function(data){
 		var user = list.findUser(data.id);
 		var room = list.findRoom(user.position);
-		if(user.id = room.masterId){
+		if(user.id == room.masterId){
 			socket.emit("GenerateTiles", {data : "asd"});
 		}
 	});
