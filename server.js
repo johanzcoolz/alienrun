@@ -196,6 +196,7 @@ io.on('connection', function(socket){
 		var user = list.findUser(data.id);
 		var room = list.findRoom(user.position);
 		for(var i = 0; i < room.usersId.length; i++){
+			console.log(room.usersId[i]);
 			var user = list.findUser(room.usersId[i]);
 			user.socket.emit('GetGeneratedTiles', {datas : data.tiles});
 		}
