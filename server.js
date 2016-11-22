@@ -204,5 +204,5 @@ io.on('connection', function(socket){
 		if(user.id = room.masterId){
 			socket.emit("GenerateTiles", {data : "asd"});
 		}
-	}
+	});
 });
