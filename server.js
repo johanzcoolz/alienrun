@@ -70,7 +70,6 @@ io.on('connection', function(socket){
 
 	socket.on('createRoom', function(data){
 		var createdRoom = new room(data.id , data.name, data.password, data.usersId);
-		list.findUser(data.id).socket = socket;
 		list.createRoom(createdRoom);							// create room
 		list.findUser(data.id).ready();						// toggle ready for room master
 		list.findUser(data.id).position = createdRoom.id;	// set position
@@ -95,7 +94,6 @@ io.on('connection', function(socket){
 	
 	socket.on('cancel', function(data){
 		var id = data.id;
-		list.findUser(id).socket = socket;
 		var roomId = list.findUser(id).position;
 		var room = list.findRoom(roomId);
 		list.quitRoom(id, roomId);		// quit room
@@ -116,7 +114,6 @@ io.on('connection', function(socket){
 		var c = new character(data.id, null, 0, 0);
 		list.addCharacter(c);
 		socket.emit("joined");
-		list.findUser(data.id).socket = socket;
 		var room = list.findRoom(data.roomId);
 		var temp_users = list.userListOnRoom(room);
 		for(var i = 0; i < room.usersId.length; i++){
@@ -179,10 +176,7 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('getSelectedChar', function(data){
-		console.log("selectchar func");
 		console.log(data);
-
-		list.findUser(data.id).socket = socket;
 		var char = list.findCharacter(data.id);
 		char.alien = data.alien;
 
@@ -194,6 +188,14 @@ io.on('connection', function(socket){
 		for(var i = 0; i < room.usersId.length; i++){
 			var user = list.findUser(room.usersId[i]);
 			user.socket.emit('selectedChar', {data: temp_users, character: char});
+		}
+	});
+	socket.on("SendGeneratedTiles", function(data){
+		var user = list.findUser(data.id);
+		var room = list.findRoom(user.position);
+		for(var i = 0; i < room.usersId.length; i++){
+			var user = list.findUser(room.usersId[i]);
+			user.socket.emit('GetGeneratedTiles', {datas : data.tiles});
 		}
 	});
 });
