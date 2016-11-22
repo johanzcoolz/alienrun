@@ -185,7 +185,6 @@ io.on('connection', function(socket){
 		var room = list.findRoom(user.position);
 		//room.start();			// set status to true
 		var temp_users = list.userListOnRoom(room);
-		console.log(room.usersId.length);
 		for(var i = 0; i < room.usersId.length; i++){
 			var user = list.findUser(room.usersId[i]);
 			user.socket.emit('selectedChar', {data: temp_users, character: char});
@@ -211,6 +210,15 @@ io.on('connection', function(socket){
 		var room = list.findRoom(user.position);
 		if(user.id == room.masterId){
 			socket.emit("GenerateTiles", {data : "asd"});
+		}
+	});
+	socket.on("RequestGetCharacter", function(data){
+		var user = list.findUser(data.id);
+		var room = list.findRoom(user.position);
+		var temp_users = list.userListOnRoomExceptMaster(room, data.id);
+		if(user.id == room.masterId){
+			var user = list.findUser(room.usersId[i]);
+			socket.emit("GetInitAllCharacter", {data : temp_users});
 		}
 	});
 });

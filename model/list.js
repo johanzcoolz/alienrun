@@ -22,7 +22,26 @@ module.exports = {
 		console.log(temp_users);
 		return temp_users;
 	},
-
+	userListOnRoomExceptMaster: function(room, id){
+		var temp_users = [];
+		for(var i = 0; i < room.usersId.length; i++){
+			if(room.masterId != id){
+				var temp_user  = {};
+				var u = this.findUser(room.usersId[i]);
+				temp_user.name = u.name;
+				temp_user.id = u.id;
+				var char = this.findCharacter(u.id);
+				temp_user.alien = char.alien;
+				temp_user.x = char.x;
+				temp_user.y = char.y;
+				temp_user.state = char.state;
+				temp_users.push(temp_user);
+			}
+			
+		}
+		console.log(temp_users);
+		return temp_users;
+	},
 	addUser: function(user){
 		var temp = new moUser({username: user.name});
 		user.id = temp._id;
