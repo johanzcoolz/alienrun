@@ -225,7 +225,7 @@ io.on('connection', function(socket){
 		character.x = data.x;
 		character.y = data.y;
 		var room = list.findRoom(user.position);
-		var temp_users = list.userListOnRoomExceptMyself(room, room.usersId[i]);
+		var temp_users = list.userListOnRoomExceptMyself(room, data.id);
 		socket.emit("UpdateCharacterPosition", {data: temp_users});
 	});
 
