@@ -238,7 +238,7 @@ io.on('connection', function(socket){
 		}
 		if(send){
 			for(var i = 0; i < room.usersId.length; i++){
-				var temp_users = list.userListOnRoomExceptMaster(room, room.usersId[i]);
+				var temp_users = list.userListOnRoomExceptMyself(room, room.usersId[i]);
 				var user = list.findUser(room.usersId[i]);
 				user.socket.emit("UpdateCharacterPosition", {data: temp_users});
 			}
