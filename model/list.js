@@ -22,7 +22,7 @@ module.exports = {
 		console.log(temp_users);
 		return temp_users;
 	},
-	userListOnRoomExceptMaster: function(room, id){
+	userListOnRoomExceptMyself: function(room, id){
 		var temp_users = [];
 		for(var i = 0; i < room.usersId.length; i++){
 			if(room.usersId[i] != id){
