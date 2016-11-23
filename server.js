@@ -225,28 +225,8 @@ io.on('connection', function(socket){
 		character.x = data.x;
 		character.y = data.y;
 		var room = list.findRoom(user.position);
-		
-		// var send = false;
-		// for(var i = 0; i < room.usersId.length; i++){
-		// 	var c = list.findCharacter(room.usersId[i]);
-		// 	if(c.x != null){
-		// 		send = true;
-		// 	}
-		// 	else{
-		// 		send = false;
-		// 	}
-		// }
-		// if(send){
-			for(var i = 0; i < room.usersId.length; i++){
-				var temp_users = list.userListOnRoomExceptMyself(room, room.usersId[i]);
-				var user = list.findUser(room.usersId[i]);
-				user.socket.emit("UpdateCharacterPosition", {data: temp_users});
-			}
-			// for(var i = 0; i < room.usersId.length; i++){
-			// 	var c = list.findCharacter(room.usersId[i]);
-			// 	c.x = null;
-			// 	c.y = null;
-			// }
-		// }
+		var temp_users = list.userListOnRoomExceptMyself(room, room.usersId[i]);
+		socket.emit("UpdateCharacterPosition", {data: temp_users});
 	});
+
 });

@@ -39,7 +39,6 @@ module.exports = {
 			}
 			
 		}
-		console.log(temp_users);
 		return temp_users;
 	},
 	addUser: function(user){
