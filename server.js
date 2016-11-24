@@ -68,8 +68,8 @@ io.on('connection', function(socket){
 			socket.emit("giveId", { data: id });
 		}
 
-		console.log("=== Database User ===");
-		console.log(list.userList());
+		// console.log("=== Database User ===");
+		// console.log(list.userList());
 	});
 
 	socket.on('createRoom', function(data){
@@ -254,9 +254,9 @@ io.on('connection', function(socket){
 	socket.on('disconnect', function () {
 		
 
-		console.log("=== BEFORE ===");
-		console.log(current.position);
-		console.log(list.roomList());
+		// console.log("=== BEFORE ===");
+		// console.log(current.position);
+		// console.log(list.roomList());
 		if(current.position != null) {
 			current = list.findUser(current.id);
 			var id = current.id;
@@ -276,12 +276,12 @@ io.on('connection', function(socket){
 				user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 			}
 		}
-		console.log("\n");
-		console.log("=== AFTER ===");
-		console.log(current.position);
+		// console.log("\n");
+		// console.log("=== AFTER ===");
+		// console.log(current.position);
 
-		console.log("=== ROOM CONDITION ===");
-		console.log(list.roomList());
+		// console.log("=== ROOM CONDITION ===");
+		// console.log(list.roomList());
 
     });
 
