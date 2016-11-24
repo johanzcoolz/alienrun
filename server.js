@@ -290,7 +290,7 @@ io.on('connection', function(socket){
 	socket.on('ThisPlayerDead', function(data) {
 		var user = list.findUser(data.id);
 		var room = list.findRoom(user.position);
-		var userChar = list.userListOnRoom(room);
+		var userChar = list.findCharacter(data.id);
 
 		room.rank.push({
 			id: user.id,
