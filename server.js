@@ -275,12 +275,13 @@ io.on('connection', function(socket){
 			}
 
 			console.log("HAI AKU ADALAH TEMP : " + temp);
+			console.log("nyoba " + temp[0]);
 
 			var tUser = list.findUser(temp);
 			var tCharacter = list.findCharacter(temp);
 
 
-			console.log("aku adalah tUser" + tUser);
+			console.log("aku adalah tUser " + tUser);
 
 			room.rank.push({
 				id: tUser.id,
