@@ -255,6 +255,7 @@ io.on('connection', function(socket){
 		var count = 0;
 		var checker = userChar.length;
 		for(var i = 0; i < checker; i++){
+			debug.log(userChar[i]);
 			if(userChar[i].dead) {
 				count++;
 			}
