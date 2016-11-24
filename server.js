@@ -289,10 +289,10 @@ io.on('connection', function(socket){
 					var tCharacter = list.findCharacter(temp[0]);
 				}
 			}
-
+			
 			console.log("aku adalah tUser " + tUser);
 
-			if (room.rank < checker) {
+			if (room.rank != checker) {
 				room.rank.push({
 					id: tUser.id,
 					name: tUser.name,
