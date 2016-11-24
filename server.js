@@ -261,28 +261,7 @@ io.on('connection', function(socket){
 			}
 		}
 		if(count == checker-1) {
-			socket.emit("GameOver", {data: "baso_cupu"});
-		}
-	});
-
-	socket.on("checkRoom", function(data) {
-		var user = list.findUser(data.id);
-		var room = list.findRoom(user.position);
-		var userChar = list.userListOnRoom(room);
-
-		var checker = userChar.length;
-		var count = 0;
-
-		for(var i = 0; i < checker; i++){
-			if(userChar[i].dead) {
-				count++;
-			}
-		}
-
-		if(count == checker-1) {
-			for(var i = 0; i < checker; i++){
-				user.socket.emit("GameOver", {data: room.rank});
-			}
+			socket.emit("GameOver", {data: room.rank});
 		}
 	});
 
