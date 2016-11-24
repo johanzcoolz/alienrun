@@ -28,4 +28,5 @@ Room.prototype.start = function() {
 
 Room.prototype.finish = function() {
 	this.state = false;
+    this.rank = [];
 };

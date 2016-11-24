@@ -294,7 +294,6 @@ io.on('connection', function(socket){
 							name: tUser.name,
 							alien: tCharacter.alien
 						});
-						
 
 						for(var j = 0; j < room.usersId.length; j++){
 							var tUser = list.findUser(room.usersId[j]);
