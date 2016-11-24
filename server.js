@@ -283,10 +283,13 @@ io.on('connection', function(socket){
 			console.log("HAI AKU ADALAH TEMP : " + temp);
 			console.log(temp);
 
-			var tUser = list.findUser(temp[0]);
-			var tCharacter = list.findCharacter(temp[0]);
-
-
+			if(temp.length!=0) {
+				var tUser = list.findUser(temp[0]);
+				if(tUser) {
+					var tCharacter = list.findCharacter(temp[0]);
+				}
+			}
+			
 			console.log("aku adalah tUser " + tUser);
 
 			if (room.rank != checker) {
