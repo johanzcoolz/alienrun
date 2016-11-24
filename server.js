@@ -252,28 +252,28 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('disconnect', function () {
-		if(current) {
-			console.log('Disconnected ' + current.name);
+		console.log('Disconnected ' + current.name);
+
+		var id = current.id;
+
+		if(current.position) {
+			var roomId = list.findUser(id).position;
+			var room = list.findRoom(roomId);
+			list.quitRoom(id, roomId);		// quit room
+			list.findUser(id).cancel();		// set ready to false
+			list.findUser(id).leave();		// set position to null
+
 			list.removeUser(current.id);
 
-			var id = current.id;
-
-			if(current.position) {
-				var roomId = list.findUser(id).position;
-				var room = list.findRoom(roomId);
-				list.quitRoom(id, roomId);		// quit room
-				list.findUser(id).cancel();		// set ready to false
-
-				var temp_users = list.userListOnRoom(room);
-				socket.emit('userListOnRoom', {data: temp_users, vroom : room});
-				for(var i = 0; i < room.usersId.length; i++){
-					var user = list.findUser(room.usersId[i]);
-					user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
-				}
+			var temp_users = list.userListOnRoom(room);
+			socket.emit('userListOnRoom', {data: temp_users, vroom : room});
+			for(var i = 0; i < room.usersId.length; i++){
+				var user = list.findUser(room.usersId[i]);
+				user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 			}
-
-			list.findUser(id).leave();		// set position to null
 		}
+
+
 
         console.log(list.roomList());
         console.log(list.userList());
