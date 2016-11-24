@@ -274,9 +274,13 @@ io.on('connection', function(socket){
 				}
 			}
 
+			console.log("HAI AKU ADALAH TEMP : " + temp);
+
 			var tUser = list.findUser(temp);
 			var tCharacter = list.findCharacter(temp);
 
+
+			console.log("aku adalah tUser" + tUser);
 
 			room.rank.push({
 				id: tUser.id,
