@@ -58,7 +58,7 @@ io.on('connection', function(socket){
 			socket.emit("giveId", { data: id });
 		}
 		else{
-			current = list.findcurrent(data.sid);
+			current = list.findUser(data.sid);
 			current.name = data.name;
 			current.socket = socket;
 			socket.emit("giveId", { data: current.id });
