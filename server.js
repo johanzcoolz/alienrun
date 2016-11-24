@@ -251,6 +251,16 @@ io.on('connection', function(socket){
 		var room = list.findRoom(user.position);
 		var temp_users = list.userListOnRoomExceptMyself(room, data.id);
 		socket.emit("UpdateCharacterPosition", {data: temp_users});
+		var count = 0;
+
+		for(var i = 0; i < checker; i++){
+			if(userChar[i].dead) {
+				count++;
+			}
+		}
+		if(count == checker) {
+			socket.emit("GameOver", {data: "baso_cupu"});
+		}
 	});
 
 	socket.on("checkRoom", function(data) {
