@@ -18,6 +18,7 @@ module.exports = {
 			temp_user.id = u.id;
 			temp_user.ready = u.status;
 			temp_user.alien = this.findCharacter(u.id).alien;
+			temp_user.dead = this.findCharacter(u.id).dead;
 			temp_users.push(temp_user);
 		}
 		console.log(temp_users);
