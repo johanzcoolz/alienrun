@@ -15,6 +15,8 @@ function Character(userId, alien, x, y) {
     this.state = "idle";
     this.x = x;
     this.y = y;
+    this.h = 0;
+    this.jump = false;
 }
 
 Character.prototype.moveRight = function(value) {

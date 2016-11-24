@@ -35,6 +35,8 @@ module.exports = {
 				temp_user.x = char.x;
 				temp_user.y = char.y;
 				temp_user.state = char.state;
+				temp_user.jump = char.jump;
+				temp_user.h = char.h;
 				temp_users.push(temp_user);
 			}
 			

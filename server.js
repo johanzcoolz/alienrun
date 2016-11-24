@@ -224,6 +224,8 @@ io.on('connection', function(socket){
 		var character = list.findCharacter(data.id);
 		character.x = data.x;
 		character.y = data.y;
+		character.h = data.h;
+		character.jmp = data.jump;
 		var room = list.findRoom(user.position);
 		var temp_users = list.userListOnRoomExceptMyself(room, data.id);
 		socket.emit("UpdateCharacterPosition", {data: temp_users});
