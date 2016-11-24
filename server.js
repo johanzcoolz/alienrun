@@ -160,8 +160,8 @@ io.on('connection', function(socket){
 		}
 	});
 
-	socket.on('finish', function(userId){
-		var roomId = list.findUser(userId).position;
+	socket.on('finish', function(data){
+		var roomId = list.findUser(data.id).position;
 		list.findRoom(roomId).finish();			// set status to false
 	});
 
