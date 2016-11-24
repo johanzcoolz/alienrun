@@ -281,9 +281,22 @@ io.on('connection', function(socket){
 
 		if(count == checker-1) {
 			for(var i = 0; i < checker; i++){
-				user.socket.emit("GameOver", {data: "baso_cupu"});
+				user.socket.emit("GameOver", {data: room.rank});
 			}
 		}
+	});
+
+
+	socket.on('ThisPlayerDead', function(data) {
+		var user = list.findUser(data.id);
+		var room = list.findRoom(user.position);
+		var userChar = list.userListOnRoom(room);
+
+		room.rank.push({
+			id: user.id,
+			name: user.name,
+			alien: userChar.alien
+		});
 	});
 
 	socket.on('disconnect', function () {

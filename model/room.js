@@ -18,6 +18,7 @@ function Room(userId, name, password, users) {
     this.password = password || "";
     this.usersId = [userId];
     this.state = false;
+    this.rank = [];
     roomCount++;
 }
 
