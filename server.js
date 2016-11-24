@@ -257,7 +257,7 @@ io.on('connection', function(socket){
 		// console.log("=== BEFORE ===");
 		// console.log(current.position);
 		// console.log(list.roomList());
-		if(current.position != null) {
+		if(current && current.position != null) {
 			current = list.findUser(current.id);
 			var id = current.id;
 			console.log('Disconnected ' + current.name);

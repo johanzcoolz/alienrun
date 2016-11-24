@@ -25,24 +25,28 @@ module.exports = {
 	},
 	userListOnRoomExceptMyself: function(room, id){
 		var temp_users = [];
-		for(var i = 0; i < room.usersId.length; i++){
-			if(room.usersId[i] != id){
-				var temp_user  = {};
-				var u = this.findUser(room.usersId[i]);
-				temp_user.name = u.name;
-				temp_user.id = u.id;
-				var char = this.findCharacter(u.id);
-				temp_user.alien = char.alien;
-				temp_user.x = char.x;
-				temp_user.y = char.y;
-				temp_user.state = char.state;
-				temp_user.jump = char.jump;
-				temp_user.h = char.h;
-				temp_users.push(temp_user);
+
+		if(room.usersId) {
+			for(var i = 0; i < room.usersId.length; i++){
+				if(room.usersId[i] != id){
+					var temp_user  = {};
+					var u = this.findUser(room.usersId[i]);
+					temp_user.name = u.name;
+					temp_user.id = u.id;
+					var char = this.findCharacter(u.id);
+					temp_user.alien = char.alien;
+					temp_user.x = char.x;
+					temp_user.y = char.y;
+					temp_user.state = char.state;
+					temp_user.jump = char.jump;
+					temp_user.h = char.h;
+					temp_users.push(temp_user);
+				}
+				
 			}
-			
 		}
 		return temp_users;
+
 	},
 	addUser: function(user){
 		var temp = new moUser({username: user.name});
