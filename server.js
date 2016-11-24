@@ -263,24 +263,26 @@ io.on('connection', function(socket){
 
 		if(count == checker-1) {
 
-			for(var i = 0; i < room.usersId.length; i++) {
-				var exist = false;
+			var temp = room.usersId.slice(0);
 
-				for(var j=0; i < room.rank.length; j++) {
-					if(room.rank[j].id == room.usersId[i]) {
-						exist = true;
-						j = room.rank.length;
-					}
 
-					if(!exist) {
-						room.rank.push({
-							id: user.id,
-							name: user.name,
-							alien: character.alien
-						});
+			for(var i = 0; i < temp.length; i++){
+				for(var j = 0; j < room.rank.length; j++){
+					if(temp[i] == room.rank[j].id) {
+						temp.splice(i,1);
 					}
 				}
 			}
+
+			var tUser = list.findUser(temp);
+			var tCharacter = list.findCharacter(temp);
+
+
+			room.rank.push({
+				id: tUser.id,
+				name: tUser.name,
+				alien: tCharacter.alien
+			});
 			
 			socket.emit("GameOver", {data: room.rank});
 		}
