@@ -252,11 +252,11 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('disconnect', function () {
-		console.log('Disconnected ' + current.name);
-
+		
 		var id = current.id;
 
 		if(current.position) {
+			console.log('Disconnected ' + current.name);
 			var roomId = list.findUser(id).position;
 			var room = list.findRoom(roomId);
 			list.quitRoom(id, roomId);		// quit room
@@ -272,8 +272,6 @@ io.on('connection', function(socket){
 				user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 			}
 		}
-
-
 
         console.log(list.roomList());
         console.log(list.userList());
