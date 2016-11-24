@@ -268,10 +268,10 @@ io.on('connection', function(socket){
 		}
 
 		if(count == checker-1) {
-			socket.emit("GameOver", {data: "baso_cupu"});
+			for(var i = 0; i < checker; i++){
+				user.socket.emit("GameOver", {data: "baso_cupu"});
+			}
 		}
-
-
 	});
 
 	socket.on('disconnect', function () {
