@@ -16,7 +16,7 @@ var express = require('express'),
 io.set('transports', ['websocket']);
 var PORT = process.env.PORT || 3000;
 server.listen(PORT);
-console.log(PORT);
+console.log("PORT : " + PORT);
 var db = 'mongodb://root:root@ds139937.mlab.com:39937/aliendb';
 mongoose.Promise = global.Promise
 mongoose.connection.on('open', function (ref) {
@@ -47,28 +47,30 @@ var character = require('./model/character.js');
 // const io = socketIO(server);
 io.on('connection', function(socket){
 	// User connected first time
+	
 
 	var current;
 
 	socket.on('connect',function(data){
 		var hs = socket.handshake;
-		if(data.sid == ""){
-			current = new User(data.name, socket);
-			var id = list.addUser(current);
-			socket.emit("giveId", { data: id });
-		}
-		else{
+
+		console.log("CONNECTED "  + data.sid);
+
+		if(list.findUser(data.sid)) {
 			current = list.findUser(data.sid);
 			current.name = data.name;
 			current.socket = socket;
 			socket.emit("giveId", { data: current.id });
 		}
+		else {
+			current = new User(data.name, socket);
+			var id = list.addUser(current);
+			socket.emit("giveId", { data: id });
+		}
+
+		console.log("=== Database User ===");
 		console.log(list.userList());
 	});
-	// socket.on('beep', function(){
-	// 	console.log("beep here");
-	// 	socket.emit('boop', {name: "Frans", data:1222});
-	// });
 
 	socket.on('createRoom', function(data){
 		var createdRoom = new room(data.id , data.name, data.password, data.usersId);
@@ -112,11 +114,21 @@ io.on('connection', function(socket){
 
 	socket.on('join', function(data){
 		list.findUser(data.id).join(data.roomId);				// set position
-		list.findRoom(data.roomId).usersId.push(data.id);		// put userId to room
+
+		var room = list.findRoom(data.roomId);
+
+		for(var i=0; i<room.usersId.length; i++){
+			if(room.usersId[i].id == data.id) 
+			{
+				return;
+			}
+		}
+
+		room.usersId.push(data.id);		// put userId to room
 		var c = new character(data.id, null, 0, 0);
 		list.addCharacter(c);
 		socket.emit("joined");
-		var room = list.findRoom(data.roomId);
+		
 		var temp_users = list.userListOnRoom(room);
 		for(var i = 0; i < room.usersId.length; i++){
 			var user = list.findUser(room.usersId[i]);
@@ -162,7 +174,7 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('getRoomList', function(){
-		console.log("roomlist");
+		console.log("=== Room List ===");
 		socket.emit('roomList', {data: list.roomList()});
 	});
 
@@ -178,6 +190,7 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('getSelectedChar', function(data){
+		console.log("=== Selected Char ===");
 		console.log(data);
 		var char = list.findCharacter(data.id);
 		char.alien = data.alien;

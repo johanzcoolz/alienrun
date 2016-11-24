@@ -1,5 +1,6 @@
 var moUser = require('../model-mongo/mUser.js');
 const User = require('../model/user.js');
+
 module.exports = {
 	roomList: function(){
 		return rooms;
@@ -61,6 +62,7 @@ module.exports = {
 	},
 	addCharacter: function(character){
 		characters.push(character);
+		console.log("=== Characers ===");
 		console.log(characters);
 	},
 
