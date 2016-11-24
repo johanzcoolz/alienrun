@@ -253,6 +253,10 @@ io.on('connection', function(socket){
         }
 
         list.findUser(id).leave();		// set position to null
+
+
+        console.log(list.roomList());
+        console.log(list.userList());
     });
 
 });
