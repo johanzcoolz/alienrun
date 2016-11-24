@@ -252,7 +252,7 @@ io.on('connection', function(socket){
 		var temp_users = list.userListOnRoomExceptMyself(room, data.id);
 		socket.emit("UpdateCharacterPosition", {data: temp_users});
 		var count = 0;
-
+		var checker = userChar.length;
 		for(var i = 0; i < checker; i++){
 			if(userChar[i].dead) {
 				count++;
