@@ -258,7 +258,7 @@ io.on('connection', function(socket){
 				count++;
 			}
 		}
-		if(count == checker) {
+		if(count == checker-1) {
 			socket.emit("GameOver", {data: "baso_cupu"});
 		}
 	});
