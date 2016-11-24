@@ -253,11 +253,15 @@ io.on('connection', function(socket){
 
 	socket.on('disconnect', function () {
 		
-		var id = current.id;
 
-		if(current.position) {
+		console.log("=== BEFORE ===");
+		console.log(current.position);
+		console.log(list.roomList());
+		if(current.position != null) {
+			current = list.findUser(current.id);
+			var id = current.id;
 			console.log('Disconnected ' + current.name);
-			var roomId = list.findUser(id).position;
+			var roomId = current.position;
 			var room = list.findRoom(roomId);
 			list.quitRoom(id, roomId);		// quit room
 			list.findUser(id).cancel();		// set ready to false
@@ -272,9 +276,13 @@ io.on('connection', function(socket){
 				user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
 			}
 		}
+		console.log("\n");
+		console.log("=== AFTER ===");
+		console.log(current.position);
 
-        console.log(list.roomList());
-        console.log(list.userList());
+		console.log("=== ROOM CONDITION ===");
+		console.log(list.roomList());
+
     });
 
 });
