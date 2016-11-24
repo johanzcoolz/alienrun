@@ -289,17 +289,21 @@ io.on('connection', function(socket){
 
 			console.log("aku adalah tUser " + tUser);
 
-			room.rank.push({
-				id: tUser.id,
-				name: tUser.name,
-				alien: tCharacter.alien
-			});
-			
+			if (room.rank != checker) {
+				room.rank.push({
+					id: tUser.id,
+					name: tUser.name,
+					alien: tCharacter.alien
+				});
+				
 
-			for(var j = 0; j < room.rank.length; j++){
-				var tUser = list.findUser(room.usersId[j]);
-				tUser.socket.emit("GameOver", {data: room.rank});
+				for(var j = 0; j < room.rank.length; j++){
+					var tUser = list.findUser(room.usersId[j]);
+					tUser.socket.emit("GameOver", {data: room.rank});
+				}
 			}
+
+
 			
 		}
 	});
