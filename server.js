@@ -233,6 +233,8 @@ io.on('connection', function(socket){
 			socket.emit("GenerateTiles", {data : "asd"});
 		}
 	});
+	
+
 	socket.on("RequestGetCharacter", function(data){
 		console.log("req char");
 		var user = list.findUser(data.id);
@@ -240,6 +242,8 @@ io.on('connection', function(socket){
 		var temp_users = list.userListOnRoomExceptMyself(room, data.id);
 		socket.emit("GetInitAllCharacter", {data : temp_users});
 	});
+
+	
 	socket.on("GetUpdateCharacterPosition", function(data){
 		var user = list.findUser(data.id);
 		var character = list.findCharacter(data.id);
@@ -261,7 +265,9 @@ io.on('connection', function(socket){
 			}
 		}
 
-		if(count == checker-1) {
+
+
+		if(count == checker-1 && room.rank != checker) {
 
 			var temp = room.usersId.slice(0);
 
@@ -289,7 +295,12 @@ io.on('connection', function(socket){
 				alien: tCharacter.alien
 			});
 			
-			socket.emit("GameOver", {data: room.rank});
+
+			for(var j = 0; j < room.rank.length; j++){
+				var tUser = list.findUser(room.usersId[j]);
+				tUser.socket.emit("GameOver", {data: room.rank});
+			}
+			
 		}
 	});
 
