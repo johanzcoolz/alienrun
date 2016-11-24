@@ -275,10 +275,10 @@ io.on('connection', function(socket){
 			}
 
 			console.log("HAI AKU ADALAH TEMP : " + temp);
-			console.log("nyoba " + temp[0]);
+			console.log(temp);
 
-			var tUser = list.findUser(temp);
-			var tCharacter = list.findCharacter(temp);
+			var tUser = list.findUser(temp[0]);
+			var tCharacter = list.findCharacter(temp[0]);
 
 
 			console.log("aku adalah tUser " + tUser);
