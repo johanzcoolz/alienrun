@@ -48,19 +48,20 @@ var character = require('./model/character.js');
 io.on('connection', function(socket){
 	// User connected first time
 
-	var name = "Sleey";				// Get username
+	var current;
+
 	socket.on('connect',function(data){
 		var hs = socket.handshake;
 		if(data.sid == ""){
-			var current = new User(data.name, socket);
+			current = new User(data.name, socket);
 			var id = list.addUser(current);
 			socket.emit("giveId", { data: id });
 		}
 		else{
-			var user = list.findUser(data.sid);
-			user.name = data.name;
-			user.socket = socket;
-			socket.emit("giveId", { data: user.id });
+			current = list.findcurrent(data.sid);
+			current.name = data.name;
+			current.socket = socket;
+			socket.emit("giveId", { data: current.id });
 		}
 		console.log(list.userList());
 	});
@@ -230,5 +231,24 @@ io.on('connection', function(socket){
 		var temp_users = list.userListOnRoomExceptMyself(room, data.id);
 		socket.emit("UpdateCharacterPosition", {data: temp_users});
 	});
+
+	socket.on('disconnect', function () {
+        console.log('Disconnected ' + current.name);
+        list.removeUser(current.id);
+
+        var id = current.id;
+        var roomId = list.findUser(id).position;
+        var room = list.findRoom(roomId);
+        list.quitRoom(id, roomId);		// quit room
+        list.findUser(id).cancel();		// set ready to false
+        list.findUser(id).leave();		// set position to null
+        var temp_users = list.userListOnRoom(room);
+        socket.emit('userListOnRoom', {data: temp_users, vroom : room});
+        for(var i = 0; i < room.usersId.length; i++){
+        	var user = list.findUser(room.usersId[i]);
+        	user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
+        }
+
+    });
 
 });
