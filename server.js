@@ -260,7 +260,28 @@ io.on('connection', function(socket){
 				count++;
 			}
 		}
+
 		if(count == checker-1) {
+
+			for(var i = 0; i < room.usersId.length; i++) {
+				var exist = false;
+
+				for(var j=0; i < room.rank.length; j++) {
+					if(room.rank[j].id == room.usersId[i]) {
+						exist = true;
+						j = room.rank.length;
+					}
+
+					if(!exist) {
+						room.rank.push({
+							id: user.id,
+							name: user.name,
+							alien: character.alien
+						});
+					}
+				}
+			}
+			
 			socket.emit("GameOver", {data: room.rank});
 		}
 	});
