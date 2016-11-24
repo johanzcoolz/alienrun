@@ -253,6 +253,27 @@ io.on('connection', function(socket){
 		socket.emit("UpdateCharacterPosition", {data: temp_users});
 	});
 
+	socket.on("checkRoom", function(data) {
+		var user = list.findUser(data.id);
+		var room = list.findRoom(user.position);
+		var userChar = list.userListOnRoom(room);
+
+		var checker = userChar.length;
+		var count = 0;
+
+		for(var i = 0; i < checker; i++){
+			if(userChar[i].dead) {
+				count++;
+			}
+		}
+
+		if(count == checker-1) {
+			socket.emit("GameOver", {data: "baso_cupu"});
+		}
+
+
+	});
+
 	socket.on('disconnect', function () {
 		
 
