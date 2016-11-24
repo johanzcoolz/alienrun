@@ -287,26 +287,27 @@ io.on('connection', function(socket){
 				var tUser = list.findUser(temp[0]);
 				if(tUser) {
 					var tCharacter = list.findCharacter(temp[0]);
-				}
-			}
-			
-			console.log("aku adalah tUser " + tUser);
-
-			if (room.rank != checker) {
-				room.rank.push({
-					id: tUser.id,
-					name: tUser.name,
-					alien: tCharacter.alien
-				});
 				
+					if (room.rank != checker) {
+						room.rank.push({
+							id: tUser.id,
+							name: tUser.name,
+							alien: tCharacter.alien
+						});
+						
 
-				for(var j = 0; j < room.usersId.length; j++){
-					var tUser = list.findUser(room.usersId[j]);
-					if(tUser) {
-						tUser.socket.emit("GameOver", {data: room.rank});
+						for(var j = 0; j < room.usersId.length; j++){
+							var tUser = list.findUser(room.usersId[j]);
+							if(tUser) {
+								tUser.socket.emit("GameOver", {data: room.rank});
+							}
+						}
 					}
 				}
 			}
+
+
+
 
 
 			
