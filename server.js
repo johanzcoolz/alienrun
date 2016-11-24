@@ -297,9 +297,11 @@ io.on('connection', function(socket){
 				});
 				
 
-				for(var j = 0; j < room.rank.length; j++){
+				for(var j = 0; j < room.usersId.length; j++){
 					var tUser = list.findUser(room.usersId[j]);
-					tUser.socket.emit("GameOver", {data: room.rank});
+					if(tUser) {
+						tUser.socket.emit("GameOver", {data: room.rank});
+					}
 				}
 			}
 
