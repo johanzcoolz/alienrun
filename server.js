@@ -117,23 +117,29 @@ io.on('connection', function(socket){
 
 		var room = list.findRoom(data.roomId);
 
+		var joined = false;
+
 		for(var i=0; i<room.usersId.length; i++){
 			if(room.usersId[i].id == data.id) 
 			{
-				return;
+				joined = true;
 			}
 		}
 
-		room.usersId.push(data.id);		// put userId to room
-		var c = new character(data.id, null, 0, 0);
-		list.addCharacter(c);
-		socket.emit("joined");
-		
-		var temp_users = list.userListOnRoom(room);
-		for(var i = 0; i < room.usersId.length; i++){
-			var user = list.findUser(room.usersId[i]);
-			user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
+		if(!joined) {
+			room.usersId.push(data.id);		// put userId to room
+			var c = new character(data.id, null, 0, 0);
+			list.addCharacter(c);
+			socket.emit("joined");
+			
+			var temp_users = list.userListOnRoom(room);
+			for(var i = 0; i < room.usersId.length; i++){
+				var user = list.findUser(room.usersId[i]);
+				user.socket.emit('userListOnRoom', {data: temp_users, vroom : room});
+			}
 		}
+
+
 	});
 
 	socket.on('start', function(data){
