@@ -320,7 +320,7 @@ io.on('connection', function(socket){
 		});
 	});
 
-	socket.on('getCoinData' function() {
+	socket.on('getCoinData', function() {
 
 		var coins = [];
 
