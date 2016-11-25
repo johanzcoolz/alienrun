@@ -326,8 +326,8 @@ io.on('connection', function(socket){
 
 		for (var i = 0; i < 5; i++) {
 			coins.push({
-				x: 50,
-				y: 100*(i+1)
+				x: 0,
+				y: 10*(i+1)
 			});
 		}
 		socket.emit("coinData", {data: coins});
