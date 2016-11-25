@@ -24,6 +24,7 @@ function Room(userId, name, password, users) {
 
 Room.prototype.start = function() {
 	this.state = true;
+    this.rank = [];
 };
 
 Room.prototype.finish = function() {

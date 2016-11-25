@@ -304,12 +304,6 @@ io.on('connection', function(socket){
 					}
 				}
 			}
-
-
-
-
-
-			
 		}
 	});
 
@@ -324,6 +318,20 @@ io.on('connection', function(socket){
 			name: user.name,
 			alien: userChar.alien
 		});
+	});
+
+	socket.on('getCoinData' function() {
+
+		var coins = [];
+
+		for (var i = 0; i < 5; i++) {
+			coins.push({
+				x: 50,
+				y: 100*(i+1)
+			});
+		}
+		socket.emit("coinData", {data: coins});
+
 	});
 
 	socket.on('disconnect', function () {
